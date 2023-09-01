@@ -30,4 +30,24 @@ Out[1]: '11111111111111111111111111110000'
 
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 """
-print('test')
+ip = input('Введите ip адрес: ')
+ip, cidr = ip.split('/')
+ip = [int(x) for x in ip.split('.')]
+ip_template = '''\
+Network:
+{0:<8}  {1:<8}  {2:<8}  {3:<8}
+{0:08b}  {1:08b}  {2:08b}  {3:08b}
+'''
+print(ip_template.format(*ip))
+
+
+mask_b = "1" * int(cidr) + "0" * (32 - int(cidr))
+mask = [mask_b[i:i+8] for i in range(0, len(mask_b), 8)]
+mask = [int(curr, 2) for curr in mask]
+mask_template = '''\
+Mask:
+/{0:}
+{1:<8}  {2:<8}  {3:<8}  {4:<8}
+{1:08b}  {2:08b}  {3:08b}  {4:08b}\
+'''
+print(mask_template.format(cidr, *mask))
